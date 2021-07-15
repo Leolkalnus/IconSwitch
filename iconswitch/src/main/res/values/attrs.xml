@@ -19,5 +19,17 @@
             <enum name="right" value="1" />
         </attr>
 
+        <attr name="isw_thumb_type" format="enum">
+            <enum name="circle" value="0" />
+            <enum name="square" value="1" />
+        </attr>
+
+        <attr name="isw_bg_type" format="enum">
+            <enum name="inner" value="0" />
+            <enum name="outer" value="1" />
+        </attr>
+
+        <attr name="isw_thumb_round_corner_size" format="dimension" />
+        <attr name="isw_background_round_corner_size" format="dimension" />
     </declare-styleable>
 </resources>

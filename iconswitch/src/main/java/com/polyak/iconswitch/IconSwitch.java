@@ -68,6 +68,7 @@ public class IconSwitch extends ViewGroup {
     private int translationX, translationY;
 
     private Checked currentChecked;
+    private ThumbTypeEnum thumbType;
 
     private CheckedChangeListener listener;
 
@@ -104,9 +105,7 @@ public class IconSwitch extends ViewGroup {
         addView(thumb = new ThumbView(getContext()));
         addView(leftIcon = new ImageView(getContext()));
         addView(rightIcon = new ImageView(getContext()));
-
         setBackground(background = new IconSwitchBg());
-
         iconSize = dpToPx(DEFAULT_IMAGE_SIZE_DP);
 
         int colorDefInactive = getAccentColor();
@@ -127,7 +126,17 @@ public class IconSwitch extends ViewGroup {
             thumbColorLeft = ta.getColor(R.styleable.IconSwitch_isw_thumb_color_left, colorDefThumb);
             thumbColorRight = ta.getColor(R.styleable.IconSwitch_isw_thumb_color_right, colorDefThumb);
             currentChecked = Checked.values()[ta.getInt(R.styleable.IconSwitch_isw_default_selection, 0)];
+            thumbType = ThumbTypeEnum.values()[ta.getInt(R.styleable.IconSwitch_isw_thumb_type, 0)];
+            thumb.setThumbType(thumbType);
+            background.setThumbType(thumbType);
 
+            BgTypeEnum bgTypeEnum = BgTypeEnum.values()[ta.getInt(R.styleable.IconSwitch_isw_bg_type, 0)];
+            thumb.setBgType(bgTypeEnum);
+            background.setBgType(bgTypeEnum);
+
+
+            thumb.setRadiusX(ta.getDimension(R.styleable.IconSwitch_isw_thumb_round_corner_size, 0f));
+            background.setRadiusX(ta.getDimension(R.styleable.IconSwitch_isw_background_round_corner_size, 0f));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 leftIcon.setImageDrawable(ta.getDrawable(R.styleable.IconSwitch_isw_icon_left));
                 rightIcon.setImageDrawable(ta.getDrawable(R.styleable.IconSwitch_isw_icon_right));
@@ -141,6 +150,7 @@ public class IconSwitch extends ViewGroup {
             ta.recycle();
         } else {
             currentChecked = Checked.LEFT;
+            thumbType = ThumbTypeEnum.CIRCLE;
             inactiveTintIconLeft = colorDefInactive;
             activeTintIconLeft = colorDefActive;
             inactiveTintIconRight = colorDefInactive;
@@ -149,7 +159,6 @@ public class IconSwitch extends ViewGroup {
             thumbColorLeft = colorDefThumb;
             thumbColorRight = colorDefThumb;
         }
-
         thumbPosition = currentChecked == Checked.LEFT ? 0f : 1f;
 
         calculateSwitchDimensions();
