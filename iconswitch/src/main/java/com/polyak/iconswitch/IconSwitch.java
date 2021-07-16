@@ -32,6 +32,7 @@ public class IconSwitch extends ViewGroup {
     private static final String EXTRA_SUPER = "extra_super";
     private static final String EXTRA_CHECKED = "extra_is_checked";
 
+    private static final int DEFAULT_CONTROL_HEIGHT_SIZE_DP = 36;
     private static final int DEFAULT_IMAGE_SIZE_DP = 18;
     private static final int MIN_ICON_SIZE_DP = 12;
     private static final int UNITS_VELOCITY = 1000;
@@ -52,7 +53,7 @@ public class IconSwitch extends ViewGroup {
     private int thumbDragDistance;
 
     private int switchWidth, switchHeight;
-    private int iconOffset, iconSize;
+    private int iconOffset, iconSize, controlHeight;
     private int iconTop, iconBottom;
     private int thumbStartLeft, thumbEndLeft;
     private int thumbDiameter;
@@ -107,6 +108,7 @@ public class IconSwitch extends ViewGroup {
         addView(rightIcon = new ImageView(getContext()));
         setBackground(background = new IconSwitchBg());
         iconSize = dpToPx(DEFAULT_IMAGE_SIZE_DP);
+        controlHeight = dpToPx(DEFAULT_CONTROL_HEIGHT_SIZE_DP);
 
         int colorDefInactive = getAccentColor();
         int colorDefActive = Color.WHITE;
@@ -117,6 +119,7 @@ public class IconSwitch extends ViewGroup {
         if (attr != null) {
             TypedArray ta = getContext().obtainStyledAttributes(attr, R.styleable.IconSwitch);
             iconSize = ta.getDimensionPixelSize(R.styleable.IconSwitch_isw_icon_size, iconSize);
+            controlHeight = ta.getDimensionPixelSize(R.styleable.IconSwitch_isw_height, controlHeight);
             inactiveTintIconLeft = ta.getColor(R.styleable.IconSwitch_isw_inactive_tint_icon_left, colorDefInactive);
 
             activeTintIconLeft = ta.getColor(R.styleable.IconSwitch_isw_active_tint_icon_left, colorDefActive);
@@ -169,10 +172,10 @@ public class IconSwitch extends ViewGroup {
     private void calculateSwitchDimensions() {
         iconSize = Math.max(iconSize, dpToPx(MIN_ICON_SIZE_DP));
 
-        switchWidth = iconSize * 4;
-        switchHeight = Math.round(iconSize * 2f);
+        switchWidth = controlHeight * 2;
+        switchHeight = Math.round(controlHeight);
 
-        iconOffset = Math.round(iconSize * 0.6f);
+        iconOffset = Math.round((controlHeight-iconSize) * 0.6f);
         iconTop = (switchHeight - iconSize) / 2;
         iconBottom = iconTop + iconSize;
         thumbDiameter = switchHeight;
@@ -198,7 +201,7 @@ public class IconSwitch extends ViewGroup {
         leftIcon.measure(iconSpec, iconSpec);
         rightIcon.measure(iconSpec, iconSpec);
 
-        background.init(iconSize, width, height);
+        background.init(controlHeight, width, height);
 
         translationX = (width / 2) - (switchWidth / 2);
         translationY = (height / 2) - (switchHeight / 2);

@@ -31,16 +31,17 @@ class IconSwitchBg extends Drawable {
     public void init(int imageSize, int width, int height) {
         final float centerX = width * 0.5f;
         final float centerY = height * 0.5f;
-        float halfWidth = imageSize * 1.75f;
-        float halfHeight = imageSize * 0.75f;
+        float halfWidth;
+        float halfHeight;
         switch (bgType){
+            default:
             case INNER:
-                halfWidth = imageSize * 1.75f;
-                halfHeight = imageSize * 0.75f;
+                halfWidth = imageSize/2f * 1.75f;
+                halfHeight = imageSize/2f * 0.75f;
                 break;
             case OUTER:
-                halfWidth = imageSize * 2f-STROKE_SIZE/2;
-                halfHeight = imageSize * 1f-STROKE_SIZE/2;
+                halfWidth = imageSize-STROKE_SIZE/2f;// * 2f-STROKE_SIZE/2;
+                halfHeight = imageSize/2f-STROKE_SIZE/2f;// * 1f-STROKE_SIZE/2;
                 break;
         }
         bounds.set(

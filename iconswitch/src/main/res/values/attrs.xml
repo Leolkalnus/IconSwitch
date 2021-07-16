@@ -4,6 +4,7 @@
         <attr name="isw_icon_left" format="reference" />
         <attr name="isw_icon_right" format="reference" />
 
+        <attr name="isw_height" format="dimension" />
         <attr name="isw_icon_size" format="dimension" />
 
         <attr name="isw_background_color" format="color" />
